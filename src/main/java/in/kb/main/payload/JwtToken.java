@@ -1,7 +1,6 @@
 package in.kb.main.payload;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -47,4 +46,29 @@ public class JwtToken {
         byte[] bytes = SECRET_KEY.getBytes();
         return Keys.hmacShaKeyFor(bytes);
     }
+
+
+    //================================================================
+    private Jws<Claims>  getAllDetailsFromToken(String token){
+        JwtParserBuilder parser = Jwts.parser();
+
+        return parser.verifyWith(getKey()).build().parseSignedClaims(token);
+
+    };
+
+    public String getUsernameFromToken(String token){
+
+       return getAllDetailsFromToken(token).getPayload().getSubject();
+
+    }
+
+    public boolean isExpired(String token){
+       Date expired =  getAllDetailsFromToken(token).getPayload().getExpiration();
+        return expired.before(new Date()); //true => account is expired;
+                                          //false => account is not expired;
+
+    }
+
+
+
 }

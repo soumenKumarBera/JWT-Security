@@ -52,17 +52,17 @@ public class MyController {
     }
 
     @GetMapping("/admin")
-    public void adminPage(){
+    public ResponseEntity<String> adminPage(){
 
-
+return ResponseEntity.ok("ADMIN panel");
 
     }
 
     @GetMapping("/member")
-    public void memberPage(){
+    public ResponseEntity<String> memberPage(){
 
 
-
+        return ResponseEntity.ok("MEMBER panel");
     }
 
 
