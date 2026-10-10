@@ -22,6 +22,7 @@ public class JwtToken {
 
     public String generatedToken(UserDetails userDetails){
 
+        // one user multiple role  identifier
         List<String> roles = new ArrayList<>();
         for(GrantedAuthority grantedAuthority: userDetails.getAuthorities()){
             roles.add(grantedAuthority.getAuthority());
@@ -31,12 +32,13 @@ public class JwtToken {
         claims.put("roles", roles);
 
        String token =  Jwts.builder()
-                .claims(claims)
-                .subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + JWT_VALIDITY * 1000 ))
-               .signWith(getKey(),Jwts.SIG.HS512)
+                .claims(claims) // setRoll
+                .subject(userDetails.getUsername()) // setUserName
+                .issuedAt(new Date(System.currentTimeMillis())) //issueDate
+                .expiration(new Date(System.currentTimeMillis() + JWT_VALIDITY * 1000 )) //expiredTime
+               .signWith(getKey(),Jwts.SIG.HS512)  //secret key
                 .compact();
+
 
         return token;
 

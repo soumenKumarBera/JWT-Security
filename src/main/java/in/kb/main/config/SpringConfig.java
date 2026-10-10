@@ -1,5 +1,6 @@
 package in.kb.main.config;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,11 +28,12 @@ public class SpringConfig {
 
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/member").hasRole("MEMBER")
+
                         .anyRequest().permitAll()
 
-                )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                );
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
     }
@@ -46,5 +48,10 @@ public class SpringConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
 
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
     }
 }

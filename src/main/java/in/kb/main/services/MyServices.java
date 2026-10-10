@@ -1,9 +1,8 @@
 package in.kb.main.services;
 
 import in.kb.main.config.UserDetailsImp;
-import in.kb.main.entitys.Customer;
-import in.kb.main.reposirtory.CustomerRepository;
-import lombok.AllArgsConstructor;
+import in.kb.main.entitys.User;
+import in.kb.main.reposirtory.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,25 +15,25 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MyServices implements UserDetailsService {
 
-    private final CustomerRepository customerRepository;
+    private final UserRepository customerRepository;
 
 
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Customer> opt = customerRepository.findByUsername(username);
+//        Optional<User> opt = customerRepository.findByUsername(username);
+//
+//        if (opt.isPresent()){
+//
+//            User customer = opt.get();
+//
+//            return new UserDetailsImp(customer);
+//
+//        }else {
+//            throw new UsernameNotFoundException("UserName is wrong.......");
+//        }
 
-        if (opt.isPresent()){
-
-            Customer customer = opt.get();
-
-            return new UserDetailsImp(customer);
-
-        }else {
-            throw new UsernameNotFoundException("UserName is wrong.......");
-        }
-
-
+ return  null;
 
 
     }
