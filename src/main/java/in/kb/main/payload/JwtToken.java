@@ -1,5 +1,6 @@
 package in.kb.main.payload;
 
+import in.kb.main.services.CustomServiceDetails;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +29,12 @@ public class JwtToken {
             roles.add(grantedAuthority.getAuthority());
         };
 
+       CustomServiceDetails  customServiceDetails =(CustomServiceDetails) userDetails;
+
         Map<String, Object> claims = new HashMap<>();
+        claims.put("id",customServiceDetails.getId());
+        claims.put("name", customServiceDetails.getName());
+        claims.put("userType", customServiceDetails.getUserType());
         claims.put("roles", roles);
 
        String token =  Jwts.builder()

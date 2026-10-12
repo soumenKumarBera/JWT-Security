@@ -11,12 +11,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/auth")
 public class MyController {
 
     @Autowired
@@ -30,40 +28,41 @@ public class MyController {
     public ResponseEntity<JwtResponse> loginPage(@RequestBody JwtAuthRequest jwtAuthRequest){
         String username =  jwtAuthRequest.getUsername();
         String password = jwtAuthRequest.getPassword();
+        System.out.println("working");
 
      UserDetails userDetails = authenticate(username, password);
      //GENERATE  TOKEN ON THE BASIC OF UserDetails OBJECT
+
+        System.out.println("medium");
 
        String token =  jwtToken.generatedToken(userDetails); // NEW ERA
         JwtResponse jwtResponse = new JwtResponse();
         jwtResponse.setToken(token);
 
+        System.out.println("finsh");
+
         return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
-
-
 
     }
 
     private UserDetails authenticate(String username, String password) {
+       
 
-        UsernamePasswordAuthenticationToken userpass = new UsernamePasswordAuthenticationToken(username, password);
-          Authentication authentication =  authenticationManager.authenticate(userpass);
-        return (UserDetails) authentication.getPrincipal();
+
+            Authentication authentication =
+                    authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(
+                                    username, password
+                            )
+                    );
+
+
+            return (UserDetails) authentication.getPrincipal();
+
+
     }
 
-    @GetMapping("/admin")
-    public ResponseEntity<String> adminPage(){
 
-return ResponseEntity.ok("ADMIN panel");
-
-    }
-
-    @GetMapping("/member")
-    public ResponseEntity<String> memberPage(){
-
-
-        return ResponseEntity.ok("MEMBER panel");
-    }
 
 
 
