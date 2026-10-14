@@ -1,5 +1,6 @@
 package in.kb.main.entitys;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +20,9 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserType userType;
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private RefreshToken refreshToken;
 
 }

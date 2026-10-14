@@ -11,7 +11,7 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalException {
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler({Exception.class, JwtException.class})
     public ResponseEntity<Map<String,Object>> exceptionHandler(Exception e){
 
         Map<String, Object> map = new HashMap<>();
